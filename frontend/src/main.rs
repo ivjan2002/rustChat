@@ -31,7 +31,15 @@ fn App()->Html{
         <div class="row">
         <ul id="chat">
         {
-            message.iter(),map(|m| html! {<li class="list_group_item">{m}</li>}).collect::<Html>()
+            message.iter().map(|m| html! {
+                <div class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                <h5>{n.author.clone()}</h5>
+                <small>{n.created_at.format("%Y-%m-%d %H:%M:%S").clone()}</small>
+                </div>
+                <p>{n.message.clone()}</p>
+                </div>
+            }).collect::<Html>()
         }
         
         </ul>

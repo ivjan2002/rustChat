@@ -20,11 +20,16 @@ impl ChatRoom{
         cons.remove(id,sink);
 
     }
-    pub async fn broadcast_message(&self,message:Message){
+    pub async fn broadcast_message(&self,message:Message,author_id:usize){
+        let chatMessage=common::ChatMessage{
+            message:message.to_string(),
+            author:format!("User #{}",author_id)
+            created_at:Utc::now().naive_utc()
+        };
         let mut conns=self.connections.lock().await;
                     let msg=message?;
                     for (id,sink) in conns.iter_mut(){
-                        let_=sink.send(msg.clone()).await;
+                        let_=sink.send(Message::Text(json!(chat_message))).await;
 
                     }
                     
@@ -45,7 +50,7 @@ fn chat<'r>(ws:WebSocket,state:& 'r State<ChatRoom>)->Channel<'r>{
             
             while let Some[message]=ws_stream.next.await
             {
-                state.broadcast_message(message?).await;
+                state.broadcast_message(message?,user_id).await;
     
                 }
             state.remove(user_id).await;
