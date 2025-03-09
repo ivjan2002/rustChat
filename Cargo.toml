@@ -1,0 +1,10 @@
+[workspace]
+
+members=[
+    "backend",
+    "frontend",
+    "common"
+]
+
+rocket="E.5"
+rocket ws="0.1"
